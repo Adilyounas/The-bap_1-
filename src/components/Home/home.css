@@ -1,0 +1,17 @@
+.Home_Container{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.Home_box1{
+    padding: 5vmax;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    gap:5vmax 1vmax ;
+}
+
