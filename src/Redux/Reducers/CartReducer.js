@@ -22,7 +22,7 @@ const cartSlice = createSlice({
       state.presentSomeThing = true;
       const { _id, name, price, stock, quantity, image } = action.payload;
       const isExist = state.cartItems.find(
-        (item) => item._id.toString() === _id.toString()
+        (item) => item._id === _id
       );
       if (isExist) {
         return;

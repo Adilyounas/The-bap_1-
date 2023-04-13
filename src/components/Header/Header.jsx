@@ -12,7 +12,6 @@ import { NavLink } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import logo from "../../assets/shop.png";
 import SearchIcon from "@mui/icons-material/Search";
-import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import { AccountBox, Close, ShoppingCart } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 

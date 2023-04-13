@@ -15,7 +15,7 @@ import UpdatedUser from "./components/updateMe/UpdateMe.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { Toaster } from "react-hot-toast";
 import "./Loader/loader.css";
-import { useEffect } from "react";
+import {  useEffect, useState } from "react";
 import { authenticated } from "./Redux/Actions/UserActions";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Orders from "./components/Orders/Orders";
@@ -24,22 +24,47 @@ import UpdatePassword from "./components/UpdatePassword/UpdatePassword";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
 import Cart from "./components/Cart/Cart";
+import Shipping from "./components/Shipping/Shipping";
+import ConfirmOrder from "./components/ConfirmOrder/ConfirmOrder";
+import ProcessPayment from "./components/Process_Payment/ProcessPayment";
+import axios from "axios";
+//stripe error part
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from "@stripe/react-stripe-js"
+import PaymentSuccess from "./components/paymentSuccess/PaymentSuccess";
+
+
+
 
 function App() {
   const dispatch = useDispatch();
+  const [stripeKey, setStripeKey] = useState()
   const { Authenticated, error, user } = useSelector(
     (state) => state.userSlice
   );
   const { name } = useSelector((state) => state.userSlice.user);
 
+  //stripe part
+  // const getStripeApiKey = async () => {
+  //   const { data } = await axios.get("/api/v1/stripeKey")
+  //   console.log(data.stripeApiKey);
+  //   setStripeKey(data.stripeApiKey)
+  // }
+
   useEffect(() => {
     dispatch(authenticated());
+    // getStripeApiKey()
   }, [Authenticated, error, dispatch, name]);
 
   return (
     <BrowserRouter>
       <Header />
       {Authenticated && <UserOptions user={user} />}
+
+
+
+
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<Products />} />
@@ -59,6 +84,24 @@ function App() {
         <Route path="/forgotPassword" element={<ForgotPassword />} />
         <Route path="/api/v1/reset/:token" element={<ResetPassword />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/shipping" element={<Shipping />} />
+        <Route path="/order/confirm" element={<ConfirmOrder />} />
+        <Route path="/paymentuccess" element={<PaymentSuccess />} />
+
+
+
+
+
+
+  
+    
+      <Route path="/process/payment" element={ <ProcessPayment />  } />
+    
+  
+
+
+
+
 
 
 

@@ -3,11 +3,12 @@ import "./cart.css";
 import CartItem from "./CartItem.jsx";
 import { useSelector } from "react-redux";
 import { Button } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const [scrollValue, setScrollValue] = useState(0);
   const scrollDiv = useRef();
+  const Navigate = useNavigate()
 
   const { cartItems, presentSomeThing,tax,subTotal,shippingTax,Total } = useSelector(
     (state) => state.cartSlice
@@ -24,6 +25,10 @@ const Cart = () => {
     );
     scrollDiv.current.style.width = scrollValue;
   };
+
+  const checkoutHandler =()=>{
+    Navigate("/shipping")
+  }
 
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartSlice));
@@ -68,6 +73,7 @@ const Cart = () => {
           <p>ShippingTax = {shippingTax} </p>
           <p>Tax = {tax} </p>
           <p>Total = {Total} </p>
+          <button onClick={checkoutHandler}>Check Out</button>
         </div>
       </div>
     </div>
