@@ -15,9 +15,9 @@ import UpdatedUser from "./components/updateMe/UpdateMe.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { Toaster } from "react-hot-toast";
 import "./Loader/loader.css";
-import {  useEffect, useState } from "react";
+import { useEffect } from "react";
 import { authenticated } from "./Redux/Actions/UserActions";
-import Dashboard from "./components/Dashboard/Dashboard";
+import Dashboard from "./components/Admin/Dashboard/Dashboard";
 import Orders from "./components/Orders/Orders";
 // import ProtectedRoutes from "./components/ProtectedRoutes/ProtectedRoutes";
 import UpdatePassword from "./components/UpdatePassword/UpdatePassword";
@@ -27,43 +27,36 @@ import Cart from "./components/Cart/Cart";
 import Shipping from "./components/Shipping/Shipping";
 import ConfirmOrder from "./components/ConfirmOrder/ConfirmOrder";
 import ProcessPayment from "./components/Process_Payment/ProcessPayment";
-import axios from "axios";
+import MyOrders from "./components/MyOrders/MyOrders";
+import OrderDetails from "./components/OrderDetails/Order";
+
+//admin routes start from here
+import YouJerk from "./components/Admin/NotForYou/YouJerk.jsx";
+import ProductList from "./components/Admin/ProductList/ProductList.jsx";
+import UpdateProduct from "./components/Admin/UpdateProduct/UpdateProduct.jsx";
+import Orderz from "./components/Admin/Orders/Orders";
+import SingleOrder from "./components/Admin/SingleOrder/SingleOrder";
+
 //stripe error part
-import { loadStripe } from '@stripe/stripe-js';
-import { Elements } from "@stripe/react-stripe-js"
 import PaymentSuccess from "./components/paymentSuccess/PaymentSuccess";
 
-
-
+import "./App.css";
+import CreateProduct from "./components/Admin/CreateProduct/CreateProduct";
 
 function App() {
   const dispatch = useDispatch();
-  const [stripeKey, setStripeKey] = useState()
   const { Authenticated, error, user } = useSelector(
     (state) => state.userSlice
   );
-  const { name } = useSelector((state) => state.userSlice.user);
-
-  //stripe part
-  // const getStripeApiKey = async () => {
-  //   const { data } = await axios.get("/api/v1/stripeKey")
-  //   console.log(data.stripeApiKey);
-  //   setStripeKey(data.stripeApiKey)
-  // }
 
   useEffect(() => {
     dispatch(authenticated());
-    // getStripeApiKey()
-  }, [Authenticated, error, dispatch, name]);
+  }, [Authenticated, error, dispatch]);
 
   return (
     <BrowserRouter>
       <Header />
       {Authenticated && <UserOptions user={user} />}
-
-
-
-
 
       <Routes>
         <Route path="/" element={<Home />} />
@@ -78,34 +71,106 @@ function App() {
         <Route path="/register" element={<Register />} />
         {Authenticated && <Route path="/account" element={<Account />} />}
         <Route path="/orders" element={<Orders />} />
-        <Route path="/dashboard" element={<Dashboard />} />
         {Authenticated && <Route path="/me/update" element={<UpdatedUser />} />}
-        {Authenticated && <Route path="/password/update" element={<UpdatePassword />} />}
+        {Authenticated && (
+          <Route path="/password/update" element={<UpdatePassword />} />
+        )}
         <Route path="/forgotPassword" element={<ForgotPassword />} />
         <Route path="/api/v1/reset/:token" element={<ResetPassword />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/shipping" element={<Shipping />} />
-        <Route path="/order/confirm" element={<ConfirmOrder />} />
+        <Route path="/process/payment" element={<ProcessPayment />} />
         <Route path="/paymentuccess" element={<PaymentSuccess />} />
+        <Route
+          path="/myOrders"
+          element={Authenticated === false ? <Login /> : <MyOrders />}
+        />
 
+        <Route path="/order/confirm" element={<ConfirmOrder />} />
+        <Route
+          path="/order/:orderId"
+          element={Authenticated === false ? <Login /> : <OrderDetails />}
+        />
 
+        {/* //! admin routes */}
 
+        <Route //Route No 1
+          path="/admin/dashboard"
+          element={
+            Authenticated === false && user ? (
+              <Login />
+            ) : user.userRole === "admin" ? (
+              <Dashboard />
+            ) : (
+              <YouJerk />
+            )
+          }
+        />
 
+        <Route //Route No 2
+          path="/admin/products"
+          element={
+            Authenticated === false && user ? (
+              <Login />
+            ) : user.userRole === "admin" ? (
+              <ProductList />
+            ) : (
+              <YouJerk />
+            )
+          }
+        />
 
+        <Route //Route No 3
+          path="/admin/createProduct"
+          element={
+            Authenticated === false && user ? (
+              <Login />
+            ) : user.userRole === "admin" ? (
+              <CreateProduct />
+            ) : (
+              <YouJerk />
+            )
+          }
+        />
 
-  
-    
-      <Route path="/process/payment" element={ <ProcessPayment />  } />
-    
-  
+        <Route //Route No 4
+          path="/admin/product/:id"
+          element={
+            Authenticated === false && user ? (
+              <Login />
+            ) : user.userRole === "admin" ? (
+              <UpdateProduct />
+            ) : (
+              <YouJerk />
+            )
+          }
+        />
 
+        <Route //Route No 5
+          path="/admin/AllOrders"
+          element={
+            Authenticated === false && user ? (
+              <Login />
+            ) : user.userRole === "admin" ? (
+              <Orderz />
+            ) : (
+              <YouJerk />
+            )
+          }
+        />
 
-
-
-
-
-
-
+        <Route //Route No 6
+          path="/admin/Order/:orderId"
+          element={
+            Authenticated === false && user ? (
+              <Login />
+            ) : user.userRole === "admin" ? (
+              <SingleOrder />
+            ) : (
+              <YouJerk />
+            )
+          }
+        />
       </Routes>
       <Toaster />
     </BrowserRouter>

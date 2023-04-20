@@ -81,7 +81,7 @@ const Header = () => {
             to={"/"}
             style={{ textDecoration: "none" }}
           >
-            <Typography sx={{ color: "white" }} variant="h6">
+            <Typography sx={{ color: "white",backgroundColor:"transparent" }} variant="h6">
               Home
             </Typography>
           </NavLink>

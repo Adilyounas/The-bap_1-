@@ -1,26 +1,16 @@
 // import React, { Fragment } from "react";
 // import { useSelector } from "react-redux";
-// import {redirect , Route } from "react-router-dom";
+// import { redirect, Route, useNavigate } from "react-router-dom";
 
-// const ProtectedRoutes = ({ element: Component, ...rest }) => {
-//   const { loading, Authenticated } = useSelector(
-//     (state) => state.userSlice
-//   );
-//   return (
-//     <Fragment>
-//       {!loading && (
-//         <Route
-//           {...rest}
-//           render={(props) => {
-//             if (!Authenticated) {
-//               return redirect("/login") ;
-//             }
-//             return <Component {...props} />;
-//           }}
-//         />
-//       )}
-//     </Fragment>
-//   );
+// const ProtectedRoutes = ({  Component }) => {
+//   const navigate = useNavigate();
+//   const { Authenticated } = useSelector((state) => state.userSlice);
+
+//   if (!Authenticated) {
+//     navigate("/login")
+//   } else {
+//     return <Component />
+//   }
 // };
 
 // export default ProtectedRoutes;

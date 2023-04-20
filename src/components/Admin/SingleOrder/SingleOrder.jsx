@@ -1,12 +1,10 @@
-import "./confirmOrder.css";
+import "../../ConfirmOrder/confirmOrder.css";
 import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
-import "./confirmOrder.css";
 import { Link, useNavigate } from "react-router-dom";
-import StepperComponent from "../Stepper/Stepper";
 import { Typography } from "@mui/material";
 
-const ConfirmOrder = () => {
+const SingleOrder = () => {
   const Navigate = useNavigate()
   const { user } = useSelector((state) => state.userSlice);
   const { cartItems, tax, subTotal, shippingTax, Total } = useSelector(
@@ -31,7 +29,6 @@ const ConfirmOrder = () => {
 
   return (
     <Fragment>
-      <StepperComponent activeStep={1} />
       <div className="confirmOrderPage">
         <div>
           <div className="confirmshippingArea">
@@ -104,4 +101,5 @@ const ConfirmOrder = () => {
   );
 };
 
-export default ConfirmOrder;
+export default SingleOrder;
+

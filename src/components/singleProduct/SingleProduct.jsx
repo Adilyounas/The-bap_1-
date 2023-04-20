@@ -119,7 +119,10 @@ const SingleProduct = () => {
               </button>
             </div>
           </div>
+        
         </div>
+
+        
       )}
     </>
   );

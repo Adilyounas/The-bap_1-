@@ -23,11 +23,11 @@ const UserOptions = ({ user }) => {
   };
 
   const orders = () => {
-    navigate("/orders");
+    navigate("/myOrders");
   };
 
   const dashboard = () => {
-    navigate("/dashboard");
+    navigate("/admin/dashboard");
   };
 
   const actions = [

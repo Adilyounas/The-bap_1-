@@ -189,7 +189,7 @@ const Products = () => {
           {
             filtered_Product?(
              
-              products.map((product) => (
+              products && products.map((product) => (
                 <CardItem key={product._id} product={product} />
               ))
             ):(

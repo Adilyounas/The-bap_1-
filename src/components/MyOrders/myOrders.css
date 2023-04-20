@@ -1,0 +1,76 @@
+.greenColor {
+  color: green;
+}
+
+.redColor {
+  color: red;
+}
+
+.headerBgColor {
+  background-color: rgb(224, 193, 255);
+  font-size: 1.5vmax;
+}
+
+.myOrdersPage {
+  width: 100vw;
+  max-width: 100%;
+  padding-top: 8vmax;
+  padding-left: 7vmax;
+  padding-right: 7vmax;
+  overflow-y: auto;
+  box-sizing: border-box;
+  background-color: rgb(235, 235, 235);
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+#myOrdersHeading {
+  text-align: center;
+  background-color: rgb(44, 44, 44);
+  font: 400 1.2vmax "Roboto";
+  padding: 0.5vmax;
+  color: rgb(255, 255, 255);
+  transition: all 0.5s;
+}
+
+.myOrdersTable {
+  background-color: rgb(255, 255, 255);
+}
+
+
+
+.myOrdersTable a {
+  color: rgba(0, 0, 0, 0.578);
+  transition: all 0.5s;
+}
+
+.myOrdersTable a:hover {
+  color: red;
+}
+
+
+
+
+@media screen and (max-width: 900px) {
+  .headerBgColor {
+    font-size: 2vmax;
+  }
+
+  .myOrdersPage{
+    padding-top: 15vmax;
+    padding-left: 0vmax;
+    padding-right: 0vmax;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .headerBgColor {
+    font-size: 3.2vmax;
+  }
+}
