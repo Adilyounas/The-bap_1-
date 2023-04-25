@@ -53,6 +53,10 @@ function App() {
     dispatch(authenticated());
   }, [Authenticated, error, dispatch]);
 
+
+  //very important for now this is for prevent the Right click on the website
+  window.addEventListener("contextmenu",(e)=>e.preventDefault() )
+
   return (
     <BrowserRouter>
       <Header />

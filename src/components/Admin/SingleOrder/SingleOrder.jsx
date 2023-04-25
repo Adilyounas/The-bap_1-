@@ -1,30 +1,27 @@
 import "../../ConfirmOrder/confirmOrder.css";
-import React, { Fragment } from "react";
-import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import React, { Fragment, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
 import { Typography } from "@mui/material";
+import { upDateOrder } from "../../../Redux/Actions/Admin/AdminActions";
 
 const SingleOrder = () => {
-  const Navigate = useNavigate()
+  const { orderId } = useParams();
+  const dispatch = useDispatch();
+
+  const [status, setStatus] = useState("");
   const { user } = useSelector((state) => state.userSlice);
-  const { cartItems, tax, subTotal, shippingTax, Total } = useSelector(
-    (state) => state.cartSlice
-  );
+  const { cartItems } = useSelector((state) => state.cartSlice);
 
   const { addressState, phoneNOState } = useSelector(
     (state) => state.shippingInfoSlice
   );
 
-  const proceedToPayment = () => {
-  
-    const data = {
-      tax,
-      subTotal,
-      shippingTax,
-      Total,
-    };
-    sessionStorage.setItem("OrderInfoItems", JSON.stringify(data));
-    Navigate("/process/payment")
+  const onSubmitStatusHandler = (e) => {
+    e.preventDefault();
+    const myform = new FormData();
+    myform.set("status", status);
+    dispatch(upDateOrder(myform, orderId));
   };
 
   return (
@@ -52,7 +49,7 @@ const SingleOrder = () => {
             <Typography>Your Cart Items:</Typography>
             <div className="confirmCartItemsContainer">
               {cartItems &&
-                cartItems.map((item,index) => (
+                cartItems.map((item, index) => (
                   <div key={index}>
                     <img src={item.image} alt="Product" />
                     <Link to={`/product/${item.product}`}>
@@ -71,29 +68,16 @@ const SingleOrder = () => {
         <div>
           <div className="orderSummary">
             <Typography>Order Summery</Typography>
-            <div>
-              <div>
-                <p>Subtotal:</p>
-                <span>₹{subTotal}</span>
-              </div>
-              <div>
-                <p>Shipping Charges:</p>
-                <span>₹{shippingTax}</span>
-              </div>
-              <div>
-                <p>GST:</p>
-                <span>₹{tax}</span>
-              </div>
-            </div>
-
-            <div className="orderSummaryTotal">
-              <p>
-                <b>Total:</b>
-              </p>
-              <span>₹{Total}</span>
-            </div>
-
-            <button onClick={proceedToPayment}>Proceed To Payment</button>
+            <form action="" onSubmit={onSubmitStatusHandler}>
+              <select onChange={(e) => setStatus(e.target.value)}>
+                <option value="">Chose Category</option>
+                <option value="Shipped">Shipped</option>
+                <option value="Delivered">Delivered</option>
+              </select>
+              <button disabled={status === "" ? true : false} type="submit">
+                Process
+              </button>
+            </form>
           </div>
         </div>
       </div>
@@ -102,4 +86,3 @@ const SingleOrder = () => {
 };
 
 export default SingleOrder;
-

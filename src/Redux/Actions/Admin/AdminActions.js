@@ -162,3 +162,22 @@ export const deleteOrder = (orderId) => async (dispatch) => {
     dispatch(adminAllOrdersRequest_Fail(error));
   }
 };
+
+
+
+//update order
+export const upDateOrder = (myForm,orderId) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+    dispatch(adminAllOrdersRequest());
+    await axios.put(`/api/v1/admin/updateOrder/${orderId}`,myForm, config);
+    dispatch(loadingFalse())
+  } catch (error) {
+    console.log(error);
+    dispatch(adminAllOrdersRequest_Fail(error));
+  }
+};

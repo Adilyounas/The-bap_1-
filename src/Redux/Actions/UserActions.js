@@ -53,10 +53,11 @@ export const authenticated = () => async (dispatch) => {
     dispatch(user_Request_action());
     const { data } = await axios.get(`/api/v1/profile`);
 
-   await dispatch(loggedInUser(data));
+    dispatch(loggedInUser(data));
 
     dispatch(loading_False_Action());
   } catch (error) {
+    console.log(error);
     dispatch(user_Fail_Action(error.response.data));
   }
 };
